@@ -1,0 +1,232 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/tjanczuk/edge"
+
+    >edge (v6.5.1)</a>
+</h1>
+<h4>Edge.js: run .NET and Node.js in-process on Windows, Mac OS, and Linux</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.edge">module edge</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.edge.func">
+            function <span class="apidocSignatureSpan">edge.</span>func
+            <span class="apidocSignatureSpan">(language, options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.edge" id="apidoc.module.edge">module edge</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.edge.func" id="apidoc.element.edge.func">
+        function <span class="apidocSignatureSpan">edge.</span>func
+        <span class="apidocSignatureSpan">(language, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">func = function (language, options) {
+    if (!options) {
+        options = language;
+        language = &#x27;cs&#x27;;
+    }
+
+    if (typeof options === &#x27;string&#x27;) {
+        if (options.match(/\.dll$/i)) {
+            options = { assemblyFile: options };
+        }
+        else {
+            options = { source: options };
+        }
+    }
+    else if (typeof options === &#x27;function&#x27;) {
+        var originalPrepareStackTrace = Error.prepareStackTrace;
+        var stack;
+        try {
+            Error.prepareStackTrace = function(error, stack) {
+                return stack;
+            };
+            stack = new Error().stack;
+        }
+        finally
+        {
+            Error.prepareStackTrace = originalPrepareStackTrace;
+        }
+
+        options = { source: options, jsFileName: stack[1].getFileName(), jsLineNumber: stack[1].getLineNumber() };
+    }
+    else if (typeof options !== &#x27;object&#x27;) {
+        throw new Error(&#x27;Specify the source code as string or provide an options object.&#x27;);
+    }
+
+    if (typeof language !== &#x27;string&#x27;) {
+        throw new Error(&#x27;The first argument must be a string identifying the language compiler to use.&#x27;);
+    }
+    else if (!options.assemblyFile) {
+        var compilerName = &#x27;edge-&#x27; + language.toLowerCase();
+        var compiler;
+        try {
+            compiler = require(compilerName);
+        }
+        catch (e) {
+            throw new Error(&#x22;Unsupported language &#x27;&#x22; + language + &#x22;&#x27;. To compile script in language &#x27;&#x22; + language +
+                &#x22;&#x27; an npm module &#x27;&#x22; + compilerName + &#x22;&#x27; must be installed.&#x22;);
+        }
+
+        try {
+            options.compiler = compiler.getCompiler();
+        }
+        catch (e) {
+            throw new Error(&#x22;The &#x27;&#x22; + compilerName + &#x22;&#x27; module required to compile the &#x27;&#x22; + language + &#x22;&#x27; language &#x22; +
+                &#x22;does not contain getCompiler() function.&#x22;);
+        }
+
+        if (typeof options.compiler !== &#x27;string&#x27;) {
+            throw new Error(&#x22;The &#x27;&#x22; + compilerName + &#x22;&#x27; module required to compile the &#x27;&#x22; + language + &#x22;&#x27; language &#x22; +
+                &#x22;did not specify correct compiler package name or assembly.&#x22;);
+        }
+
+        if (process.env.EDGE_USE_CORECLR) {
+            options.bootstrapDependencyManifest = compiler.getBootstrapDependencyManifest();
+        }
+    }
+
+    if (!options.assemblyFile &#x26;&#x26; !options.source) {
+        throw new Error(&#x27;Provide DLL or source file name or .NET script literal as a string parmeter, or specify an options object
+ &#x27;+
+            &#x27;with assemblyFile or source string property.&#x27;);
+    }
+    else if (options.assemblyFile &#x26;&#x26; options.source) {
+        throw new Error(&#x27;Provide either an asseblyFile or source property, but not both.&#x27;);
+    }
+
+    if (typeof options.source === &#x27;function&#x27;) {
+        var match = options.source.toString().match(/[^]*\/\*([^]*)\*\/\s*\}$/);
+        if (match) {
+            options.source = match[1];
+        }
+        else {
+            throw new Error(&#x27;If .NET source is provided as JavaScript function, function body must be a /* ... */ comment.&#x27;);
+        }
+    }
+
+    if (options.references !== undefined) {
+        if (!Array.isArray(options.references)) {
+            throw new Error(&#x27;The references property must be an array of strings.&#x27;);
+        }
+
+        options.references.forEach(function (ref) {
+            if (typeof ref !== &#x27;string&#x27;) {
+                throw new Error(&#x27;The references property must be an array of strings.&#x27;);
+            }
+        });
+    }
+
+    if (options.assemblyFile) {
+        if (!options.typeName) {
+            var matched = options.assemblyFile.match(/([^\\\/]+)\.dll$/i);
+            if (!matched) {
+                throw new Error(&#x27;Unable to determine the namespace name based on assembly file name. &#x27; +
+                    &#x27;Specify typeName parameter as a namespace qualified CLR type name of the application class.&#x27;);
+            }
+
+            options.typeName = matched[1] + &#x27;.Startup&#x27;;
+        }
+    }
+    else if (!options.typeName) {
+        options.typeName = &#x22;Startup&#x22;;
+    }
+
+    if (!options.methodName) {
+        options.methodName = &#x27;Invoke&#x27;;
+    }
+
+    return edge.initi ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+You can script C# from a Node.js process:
+
+**ES5**
+```javascript
+var edge = require(&#x27;edge&#x27;);
+
+var helloWorld = edge.<span class="apidocCodeKeywordSpan">func</span>(function () {/*
+async (input) =&#x3e; {
+    return &#x22;.NET Welcomes &#x22; + input.ToString();
+}
+*/});
+
+helloWorld(&#x27;JavaScript&#x27;, function (error, result) {
+if (error) throw error;
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
