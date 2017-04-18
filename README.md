@@ -1,4 +1,7 @@
-# api documentation for  [edge (v6.5.1)](https://github.com/tjanczuk/edge)  [![npm package](https://img.shields.io/npm/v/npmdoc-edge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-edge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-edge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-edge)
+# npmdoc-edge
+
+#### api documentation for  [edge (v6.5.1)](https://github.com/tjanczuk/edge)  [![npm package](https://img.shields.io/npm/v/npmdoc-edge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-edge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-edge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-edge)
+
 #### Edge.js: run .NET and Node.js in-process on Windows, Mac OS, and Linux
 
 [![NPM](https://nodei.co/npm/edge.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/edge)
