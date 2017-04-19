@@ -72,35 +72,19 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.edge.whereis">
-            function <span class="apidocSignatureSpan">edge.</span>whereis
-            <span class="apidocSignatureSpan">()</span>
-            </a>
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan"></span>edge</span>
 
         </li>
 
     </ol></li>
 
-    <li class="apidocModuleLi"><a href="#apidoc.module.edge.func">module edge.func</a><ol>
+    <li class="apidocModuleLi"><a href="#apidoc.module.edge.edge">module edge.edge</a><ol>
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.edge.func.func">
-            function <span class="apidocSignatureSpan">edge.</span>func
+            <a class="apidocElementLiA" href="#apidoc.element.edge.edge.func">
+            function <span class="apidocSignatureSpan">edge.edge.</span>func
             <span class="apidocSignatureSpan">(language, options)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.edge.whereis">module edge.whereis</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.edge.whereis.whereis">
-            function <span class="apidocSignatureSpan">edge.</span>whereis
-            <span class="apidocSignatureSpan">()</span>
             </a>
 
         </li>
@@ -258,44 +242,16 @@ if (error) throw error;
 
 
 
-    <h2>
-        <a href="#apidoc.element.edge.whereis" id="apidoc.element.edge.whereis">
-        function <span class="apidocSignatureSpan">edge.</span>whereis
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">whereis = function () {
-    var pathSep = process.platform === &#x27;win32&#x27; ? &#x27;;&#x27; : &#x27;:&#x27;;
-
-    var directories = process.env.PATH.split(pathSep);
-
-    for (var i = 0; i &#x3c; directories.length; i++) {
-    	for (var j = 0; j &#x3c; arguments.length; j++) {
-    		var filename = arguments[j];
-	        var filePath = path.join(directories[i], filename);
-
-	        if (fs.existsSync(filePath)) {
-	            return filePath;
-	        }
-	    }
-    }
-
-    return null;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
 
 </div>
 
 <div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.edge.func" id="apidoc.module.edge.func">module edge.func</a></h1>
+<h1><a href="#apidoc.module.edge.edge" id="apidoc.module.edge.edge">module edge.edge</a></h1>
 
 
     <h2>
-        <a href="#apidoc.element.edge.func.func" id="apidoc.element.edge.func.func">
-        function <span class="apidocSignatureSpan">edge.</span>func
+        <a href="#apidoc.element.edge.edge.func" id="apidoc.element.edge.edge.func">
+        function <span class="apidocSignatureSpan">edge.edge.</span>func
         <span class="apidocSignatureSpan">(language, options)</span>
         </a>
     </h2>
@@ -434,41 +390,6 @@ async (input) =&#x3e; {
 helloWorld(&#x27;JavaScript&#x27;, function (error, result) {
 if (error) throw error;
 ...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.edge.whereis" id="apidoc.module.edge.whereis">module edge.whereis</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.edge.whereis.whereis" id="apidoc.element.edge.whereis.whereis">
-        function <span class="apidocSignatureSpan">edge.</span>whereis
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">whereis = function () {
-    var pathSep = process.platform === &#x27;win32&#x27; ? &#x27;;&#x27; : &#x27;:&#x27;;
-
-    var directories = process.env.PATH.split(pathSep);
-
-    for (var i = 0; i &#x3c; directories.length; i++) {
-    	for (var j = 0; j &#x3c; arguments.length; j++) {
-    		var filename = arguments[j];
-	        var filePath = path.join(directories[i], filename);
-
-	        if (fs.existsSync(filePath)) {
-	            return filePath;
-	        }
-	    }
-    }
-
-    return null;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
 
